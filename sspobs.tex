@@ -1,0 +1,68 @@
+\documentclass[main.tex]{subfiles}
+%\usepackage{functions}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pgfkeys{/pgf/fpu=true}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Constant for pgf
+%\pgfmathparse{} %
+%\edef\Gconst{\pgfmathresult}
+
+\chapter{Simulazione FOV o popolazione stellare}
+
+\section{Stellar pop modelling}
+
+Distribuzione di massa con gaussiana $\mu, \sigma$: genero popolazione di N stelle con distribuzione di massa determinata considerando il numero di stelle aspettato nell'intervallo di massa con valore determinato casualmente con distro poissoniana.
+
+\section{Octave functions}
+
+\begin{itemize}
+\item distribuzione massa stelle (e luminosit\'a)
+
+\lstset{language={matlab},breakatwhitespace=true, breaklines=true}
+\begin{lstlisting}
+    function [mdcv popstar LF]=IMFd(Nstar)
+#IMF=(m/minmass)^(-2)
+#(m,i): somma massa*numero stelle=RV=frazione massa iniziale che ha formato stelle/et\'a cluster
+#linspace(mmin,x) vettore lunghezza definita da dm: mtot/mmin??
+#->f(m(i))*Nstar
+ndm=round(sqrt(Nstar))+1;
+#md=linspace(0,1,ndm);#mass interval discretization. Linear
+#md=logspace(1,log(1/(2*ndm)),ndm);#mass interval discretization. Log
+#mdcv=[0 logspace(-1,1,ndm)(1:end-1)]+diff([0 logspace(-1,1,ndm)/2]);#valori rappresentativi segmento
+mdcv=linspace(0,1,ndm)(1:end-1)+diff(linspace(0,1,ndm)/2);#valori rappresentativi segmento
+#sum(10.^(linspace(0,1,1000))-logspace(0,1,1000))=0
+#mrp=(md+1/(2*Nstar)).^-2;#relative probability star with given mass
+#deltam=diff([0 logspace(-1,1,ndm)]);
+deltam=diff(linspace(0,1,ndm))
+mrp=(mdcv).^-2.*deltam;#relative probability star with given mass
+prob=mrp/sum(mrp);
+starexp=prob*Nstar;
+popstar=poissrnd(starexp);
+LF=linspace(0,1,ndm);#provvisorio
+#0.23(m)^2.3 M<0.43Msun
+#m^4: 0.43<m<2
+#1.4m^3.5: 2<m<20
+#32000m: m>55msun
+endfunction
+\end{lstlisting}
+
+\item Posizione stelle FOV
+    
+    
+\end{itemize}
+
+\section{Schema dell'esperienza}
+
+%decodearray={0.2 0.5},
+
+
+\edef\frequno{20e6}    %RF freq uno
+\edef\freqdue{16.9e6}    %RF freq due
+\edef\Iuno{200e-3}    %corrente minimo corrente di picco uno
+\edef\Idue{170e-3}    %corrente minimo corrente di picco due
+ ($\nu_{ris}/I\propto\pgfmathparse{\frequno/\Iuno}\pgfmathprintnumber{\pgfmathresult}$, $\nu_{ris}/I\propto\pgfmathparse{\freqdue/\Idue}\pgfmathprintnumber{\pgfmathresult}$).
+
+
+\pgfkeys{/pgf/fpu=false}
+
+\end{document}
