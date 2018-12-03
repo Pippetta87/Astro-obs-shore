@@ -1,17 +1,17 @@
 \documentclass[main.tex]{subfiles}
-%\usepackage{functions}
+
 \begin{document}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pgfkeys{/pgf/fpu=true}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Constant for pgf
-%\pgfmathparse{} %
-%\edef\Gconst{\pgfmathresult}
 
 \chapter{Simulazione FOV o popolazione stellare}
 
 \section{Stellar pop modelling}
-
-Distribuzione di massa con gaussiana $\mu, \sigma$: genero popolazione di N stelle con distribuzione di massa determinata considerando il numero di stelle aspettato nell'intervallo di massa con valore determinato casualmente con distro poissoniana.
+\begin{tikzpicture}
+\path let \p1=(current page.center) in coordinate (zc) at (\x1,0);
+\node[anchor=east] (poissonvsgauss) at (zc) {\begin{varwidth}{0.5\textwidth}Ho un numero di aspettazione di stelle in intervalli di massa: sono eventi indipendenti? Gauss o Poisson?\end{varwidth}};
+\node[below right= of poissonvsgauss,anchor=east] (CMD) {\begin{varwidth}{0.2\textwidth}CMD\\Hess diagram: Baade44, Hess24, Salpeter55\end{varwidth}};
+\node[below left= of poissonvsgauss] (IMFasprob) {\begin{varwidth}{0.25\textwidth}IMF is a probability distribution: change from discrete data to continuus theoretical distro (Salp55, Mathis59, Scalo86)\end{varwidth}};
+\node[below= of poissonvsgauss] (stachasticity) {\begin{varwidth}{0.25\textwidth}Stochasticity. Possonian: Cervinho02, gonzales04. Covariance: Gilfanov04, cervino luridiana 06\end{varwidth}};
+\end{tikzpicture}
 
 \section{Octave functions}
 
@@ -52,9 +52,13 @@ endfunction
 \end{itemize}
 
 \section{Schema dell'esperienza}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Define Constant for pgf
+%\pgfmathparse{} %
+%\edef\Gconst{\pgfmathresult}
 %decodearray={0.2 0.5},
 
+\pgfkeys{/pgf/fpu=true}
 
 \edef\frequno{20e6}    %RF freq uno
 \edef\freqdue{16.9e6}    %RF freq due
